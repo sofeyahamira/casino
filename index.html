@@ -75,7 +75,7 @@
         // rollDice() function
         function rollDice() {
             // Roll Dice
-            diceRoll = Math.floor(Math.random() * 21);
+            diceRoll = Math.floor((Math.random() * 20) + 1);
             diceRollParagraph.textContent = `You rolled: ${diceRoll}`;
 
             // Check dice role
