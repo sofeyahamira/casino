@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎰 Casino</title>
+
+    <!-- Styles -->
+     <style>
+        body {
+            background-color: rgb(35, 33, 33);
+            color: whitesmoke;
+            font-weight: bolder;
+            font-size: 30px;
+            margin: 50px;
+        }
+
+        input {
+            padding: 5px;
+            border-radius: 5px;
+            font-size: 15px;
+        }
+
+        button {
+            margin: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 25px;
+            background-color: rgb(65, 64, 64);
+            border: none;
+            box-shadow: 0px 0px 10px white;
+            color: whitesmoke;
+            font-weight: bold;
+        }
+
+        #betStatus {
+            text-shadow: 0 0 10px;
+        }
+     </style>
+</head>
+<body>
+    <label for="bet">Bet:</label>
+    <input type="number" id="bet" placeholder="5..." style="width: 50px;"> 🪙
+    <br>
+    <label for="number">Number:</label>
+    <input type="number" id="number" placeholder="10..." style="width: 50px;">
+    <br>
+    <button onclick="rollDice()">Roll Dice 🎲</button>
+    <br>
+    <p id="diceRoll"></p>
+    <p id="betStatus"></p>
+
+    <!-- Script -->
+    <script>
+        // Variables
+        let bet = 0
+        let number = 0
+        const diceRollParagraph = document.getElementById("diceRoll");
+        const originalBetInput = document.getElementById("bet");
+        const numberInput = document.getElementById("number");
+        const betStatus = document.getElementById("betStatus");
+
+        // Get Bet value
+        originalBetInput.addEventListener("input", function () {
+            bet = originalBetInput.value;
+            console.log(bet)
+        });
+
+        // Get Number value
+        numberInput.addEventListener("input", function () {
+            number = numberInput.value;
+        });
+
+        // rollDice() function
+        function rollDice() {
+            // Roll Dice
+            diceRoll = Math.floor(Math.random() * 21);
+            diceRollParagraph.textContent = `You rolled: ${diceRoll}`;
+
+            // Check dice role
+            if (diceRoll > number) {
+                bet = bet * 2;
+                betStatus.textContent = "You doubled your bet!";
+                betStatus.style.color = "green";
+            } else if (diceRoll == number) {
+                bet = bet * 3;
+                betStatus.textContent = "You tripled your bet!";
+                betStatus.style.color = "blue";
+            } else {
+                bet = 0 
+                betStatus.textContent = "You lost your bet!";
+                betStatus.style.color = "red";
+            }
+            originalBetInput.value = bet;
+        }
+    </script>
+</body>
+</html>
