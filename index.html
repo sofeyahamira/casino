@@ -18,8 +18,14 @@
             color: whitesmoke;
             font-weight: bolder;
             font-size: 24px;
-            margin: 50px;
             font-family: "Urbancat", Tahoma, Geneva, Verdana, sans-serif;
+
+            /* Centering page */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
         }
 
         input {
@@ -29,6 +35,12 @@
             font-size: 12px;
             border: none;
             margin: 10px;
+            background-color: rgb(78, 78, 78);
+            color: whitesmoke;
+        }
+
+        input:focus {
+            outline: none;
         }
 
         button {
@@ -44,18 +56,22 @@
             font-weight: bold;
         }
 
+        hr {
+            width: 50vw;
+        }
+
         #betStatus {
             text-shadow: 0 0 10px;
         }
      </style>
 </head>
 <body>
-    <label for="bet">Bet:</label>
-    <input type="number" id="bet" placeholder="5..." style="width: 50px;"> 🪙
-    <br>
-    <label for="number">Number:</label>
-    <input type="number" id="number" placeholder="10..." style="width: 50px;">
-    <br>
+    <div>
+        <label for="bet">Bet:</label>
+        <input type="number" id="bet" placeholder="5..." style="width: 50px;"> 🪙
+    </div>
+    <p>Number: <span id="number"></span></p>
+    <hr>
     <button onclick="rollDice()">Roll Dice 🎲</button>
     <br>
     <p id="diceRoll"></p>
@@ -64,8 +80,9 @@
     <!-- Script -->
     <script>
         // Variables
-        let bet = 0
-        let number = 0
+        let bet = 0;
+        let number = 0;
+        let numberInitiated = false;
         const diceRollParagraph = document.getElementById("diceRoll");
         const originalBetInput = document.getElementById("bet");
         const numberInput = document.getElementById("number");
@@ -74,35 +91,43 @@
         // Get Bet value
         originalBetInput.addEventListener("input", function () {
             bet = originalBetInput.value;
-            console.log(bet)
         });
 
-        // Get Number value
-        numberInput.addEventListener("input", function () {
-            number = numberInput.value;
-        });
+        // Show Number value
+        numberInput.textContent = number
 
         // rollDice() function
         function rollDice() {
-            // Roll Dice
-            diceRoll = Math.floor((Math.random() * 6) + 1);
-            diceRollParagraph.textContent = `You rolled: ${diceRoll}`;
+            // Initiate Number
+            if (number <= 1 || number >=6){
+                number = Math.floor((Math.random() * 4) + 2);
+                diceRollParagraph.textContent = `Your number is: ${number}`;
+                numberInput.textContent = number;
+
+            // Roll the dice
+            } else {
+                numberInitiated = true;
+                diceRoll = Math.floor((Math.random() * 6) + 1);
+                diceRollParagraph.textContent = `You rolled: ${diceRoll}`;
+            }
 
             // Check dice role
-            if (diceRoll > number) {
-                bet = bet * 2;
-                betStatus.textContent = "You doubled your bet!";
-                betStatus.style.color = "green";
-            } else if (diceRoll == number) {
-                bet = bet * 3;
-                betStatus.textContent = "You tripled your bet!";
-                betStatus.style.color = "blue";
-            } else {
-                bet = 0 
-                betStatus.textContent = "You lost your bet!";
-                betStatus.style.color = "red";
+            if (numberInitiated === true) {
+                if (diceRoll > number) {
+                    bet = bet * 2;
+                    betStatus.textContent = "You doubled your bet!";
+                    betStatus.style.color = "green";
+                } else if (diceRoll == number) {
+                    bet = bet * 3;
+                    betStatus.textContent = "You tripled your bet!";
+                    betStatus.style.color = "blue";
+                } else {
+                    bet = 0 
+                    betStatus.textContent = "You lost your bet!";
+                    betStatus.style.color = "red";
+                }
+                originalBetInput.value = bet;
             }
-            originalBetInput.value = bet;
         }
     </script>
 </body>
