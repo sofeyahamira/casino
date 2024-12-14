@@ -101,15 +101,15 @@
         // rollDice() function
         function rollDice() {
             // Initiate Number
-            if (number < 4 || number >=8){
-                number = Math.floor((Math.random() * 5) + 4);
+            if (number < 6 || number >=12){
+                number = Math.floor((Math.random() * 12) + 1);
                 diceRollParagraph.textContent = `Your number is: ${number}`;
                 numberInput.textContent = number;
 
             // Roll the dice
             } else {
                 numberInitiated = true;
-                diceRoll = Math.floor((Math.random() * 8) + 1);
+                diceRoll = Math.floor((Math.random() * 12) + 1);
                 diceRollParagraph.textContent = `You rolled: ${diceRoll}`;
             }
 
