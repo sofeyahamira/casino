@@ -4,7 +4,7 @@ Website: https://sofeyahamira.github.io/casino/
 - Type in a bet
 - Roll the dice
     - This will be your number
-    - It cannot be 20 or 1
+    - It cannot be 20 or less than 10
 - Roll another dice
     - This is the winning roll
 - If your number is lower than the winning role your bet doubles
